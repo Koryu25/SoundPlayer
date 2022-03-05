@@ -1,0 +1,8 @@
+# 初期値
+default:
+  volume: 1
+  pitch: 1
+# 変更時の差
+different:
+  volume: 0.1
+  pitch: 0.1

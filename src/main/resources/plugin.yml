@@ -1,0 +1,7 @@
+name: SoundPlayer
+version: '${version}'
+main: com.github.koryu25.soundplayer.SoundPlayer
+api-version: 1.17
+authors: [ Koryu25 ]
+commands:
+  sp:
