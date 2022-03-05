@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 public class CommandManager implements CommandExecutor {
 
+    // コマンドの登録
     public CommandManager(SoundPlayer main) {
         main.getCommand("sp").setExecutor(this);
     }

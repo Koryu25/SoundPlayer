@@ -25,6 +25,7 @@ public class SoundData {
         return Material.JUKEBOX;
     }
 
+    // 再生
     public void play(Audience audience) {
         audience.getPlayer().playSound(
                 audience.getPlayer().getLocation(),

@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class EventProcessor implements Listener {
 
+    // リスナの登録
     public EventProcessor(SoundPlayer main) {
         main.getServer().getPluginManager().registerEvents(this, main);
     }

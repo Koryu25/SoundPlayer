@@ -19,14 +19,13 @@ public class AllSoundDataList {
         }
     }
 
-    // Indexから取得
+    // 全データの取得
     public static List<SoundData> get() {
         return soundDataList;
     }
 
-    // 検索
+    // 検索で取得
     public static List<SoundData> search(String str) {
-        // page, volume, pitch
         List<SoundData> searchedList = new ArrayList<>();
         soundDataList.forEach(soundData -> {
             if (soundData.getName().contains(str.toUpperCase())) searchedList.add(soundData);
@@ -34,7 +33,7 @@ public class AllSoundDataList {
         return searchedList;
     }
 
-    // ページ
+    // ページで取得
     public static List<SoundData> getPage(int i) {
         List<SoundData> list = new ArrayList<>();
         int startNum = i * pageSize;

@@ -36,6 +36,7 @@ public final class SoundPlayer extends JavaPlugin {
         // Plugin shutdown logic
     }
 
+    // Audienceを検索
     public static Audience searchAudience(Player player) {
         for (Audience audience : audienceList) {
             if (audience.getPlayer().getUniqueId().toString().equals(player.getUniqueId().toString())) {
@@ -45,16 +46,19 @@ public final class SoundPlayer extends JavaPlugin {
         return null;
     }
 
+    // PlayerがJoinした時の処理
     public static void join(Player player) {
         Audience audience = searchAudience(player);
         if (audience != null) return;
         audienceList.add(new Audience(player));
     }
+    // PlayerがQuitした時の処理
     public static void quit(Player player) {
         Audience audience = searchAudience(player);
         if (audience == null) return;
         audienceList.remove(audience);
     }
+    // InventoryをClickした時の処理
     public static boolean onClick(String title, Player player, int slot) {
         if (!SoundInventory.match(title)) return false;
         Audience audience = searchAudience(player);

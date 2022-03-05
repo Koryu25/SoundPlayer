@@ -16,29 +16,33 @@ public class SoundInventory {
 
     private Audience audience;
     private List<SoundData> soundDataList;
-    private int page;
-    private int currentPage;
+    private int page;// ページ数
+    private int currentPage;// 現在のページ
     private Inventory inventory;
-    private int maxSlot;
+    private int maxSlot;// 現在のページの最後尾slot
 
     public SoundInventory(Audience audience, List<SoundData> soundDataList, String suffix) {
         this.audience = audience;
         this.soundDataList = soundDataList;
         currentPage = 0;
         inventory = Bukkit.createInventory(null, 54, title + suffix);
+        // pageを算出
         page = soundDataList.size() / 45;
         if (soundDataList.size() % 45 > 0) page++;
         page--;
+        // 初期化
         initializeMaxSlot();
         initializeInventory();
     }
 
+    // maxSlotを初期化
     private void initializeMaxSlot() {
         if (page == -1) maxSlot = -1;
         else if (currentPage == page) maxSlot = soundDataList.size() % 45;
         else maxSlot = 45;
     }
 
+    // Inventoryを初期化
      private void initializeInventory() {
         // sound
          for (int index = 0; index < maxSlot; index++) {
@@ -67,9 +71,7 @@ public class SoundInventory {
          updateInformation();
     }
 
-    public void updateInformation() {
-        inventory.setItem(49, audience.toItemStack());
-    }
+    // Volumeの情報、ItemStackを初期化
     public void updateVolume() {
         String volumeDifferent = String.format("%.03f", SoundPlayer.getMyConfig().getVolumeDifferent());
         ItemStack volumeUp = new ItemStack(Material.CHICKEN);
@@ -87,6 +89,7 @@ public class SoundInventory {
         volumeDown.setItemMeta(volumeDownMeta);
         inventory.setItem(48, volumeDown);
     }
+    // Pitchの情報、ItemStackを初期化
     public void updatePitch() {
         String pitchDifferent = String.format("%.03f", SoundPlayer.getMyConfig().getPitchDifferent());
         ItemStack pitchUp = new ItemStack(Material.LIGHT_BLUE_DYE);
@@ -104,8 +107,12 @@ public class SoundInventory {
         pitchDown.setItemMeta(pitchDownMeta);
         inventory.setItem(51, pitchDown);
     }
+    // VolumeとPitchの情報が記されたItemStackを初期化
+    public void updateInformation() {
+        inventory.setItem(49, audience.toItemStack());
+    }
 
-    // クリックアクションメソッドに案内
+    // クリック時の処理
     public void onClick(int slot) {
         // サウンド再生
         if (slot < maxSlot) soundDataList.get(currentPage * 45 + slot).play(audience);
@@ -129,28 +136,28 @@ public class SoundInventory {
             audience.open();
             return;
         }
-        // volume up
+        // volume down
         if (slot == 47) {
             audience.volumeDown();
             updateVolume();
             updateInformation();
             return;
         }
-        // volume down
+        // volume up
         if (slot == 48) {
             audience.volumeUp();
             updateVolume();
             updateInformation();
             return;
         }
-        // pitch up
+        // pitch down
         if (slot == 50) {
             audience.pitchDown();
             updatePitch();
             updateInformation();
             return;
         }
-        // pitch down
+        // pitch up
         if (slot == 51) {
             audience.pitchUp();
             updatePitch();
@@ -171,6 +178,7 @@ public class SoundInventory {
         this.currentPage = currentPage;
     }
 
+    // Inventoryのtitleが合致するか確認するメソッド
     public static boolean match(String invTitle) {
         try {
             invTitle = invTitle.substring(0, title.length());

@@ -25,11 +25,13 @@ public class Audience {
         this.pitch = pitch;
     }
 
+    // SoundInventoryを開く(nullじゃなかったら)
     public void open() {
         if (soundInventory == null) return;
         player.openInventory(soundInventory.getInventory());
     }
 
+    // VolumeとPitchの情報を記したItemStackを取得
     public ItemStack toItemStack() {
         ItemStack itemStack = new ItemStack(Material.REDSTONE_BLOCK);
         ItemMeta meta = itemStack.getItemMeta();
