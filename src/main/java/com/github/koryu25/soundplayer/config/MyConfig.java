@@ -1,7 +1,10 @@
 package com.github.koryu25.soundplayer.config;
 
 import com.github.koryu25.soundplayer.SoundPlayer;
+import lombok.Data;
+import lombok.Getter;
 
+@Getter
 public class MyConfig extends CustomConfig {
 
     private float defaultVolume;
@@ -22,17 +25,4 @@ public class MyConfig extends CustomConfig {
         pitchDifferent = (float) getConfig().getDouble("different.pitch");
     }
 
-    // Getter
-    public float getDefaultVolume() {
-        return defaultVolume;
-    }
-    public float getDefaultPitch() {
-        return defaultPitch;
-    }
-    public float getVolumeDifferent() {
-        return volumeDifferent;
-    }
-    public float getPitchDifferent() {
-        return pitchDifferent;
-    }
 }

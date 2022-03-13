@@ -1,10 +1,12 @@
 package com.github.koryu25.soundplayer.sound;
 
+import lombok.Data;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+@Data
 public class SoundData {
 
     private final Sound sound;
@@ -39,25 +41,4 @@ public class SoundData {
     public String getName() {
         return sound.name();
     }
-    public Sound getSound() {
-        return sound;
-    }
-    public int getNumber() {
-        return number;
-    }
-    public ItemStack getItemStack() {
-        return itemStack;
-    }
-
-    /*
-    public void setSound(Sound sound) {
-        this.sound = sound;
-    }
-    public void setNumber(int number) {
-        this.number = number;
-    }
-    public void setItemStack(ItemStack itemStack) {
-        this.itemStack = itemStack;
-    }
-     */
 }
