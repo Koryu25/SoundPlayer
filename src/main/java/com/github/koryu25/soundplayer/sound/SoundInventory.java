@@ -1,6 +1,8 @@
 package com.github.koryu25.soundplayer.sound;
 
 import com.github.koryu25.soundplayer.SoundPlayer;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -17,9 +19,15 @@ public class SoundInventory {
     private Audience audience;
     private List<SoundData> soundDataList;
     private int page;// ページ数
-    private int currentPage;// 現在のページ
-    private Inventory inventory;
     private int maxSlot;// 現在のページの最後尾slot
+
+    @Getter
+    @Setter
+    private int currentPage;// 現在のページ
+
+    @Getter
+    private Inventory inventory;
+
 
     public SoundInventory(Audience audience, List<SoundData> soundDataList, String suffix) {
         this.audience = audience;
@@ -166,17 +174,6 @@ public class SoundInventory {
         }
     }
 
-    // Getter, Setter
-    public int getCurrentPage() {
-        return currentPage;
-    }
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
-    }
 
     // Inventoryのtitleが合致するか確認するメソッド
     public static boolean match(String invTitle) {
