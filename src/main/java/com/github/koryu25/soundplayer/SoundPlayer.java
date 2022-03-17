@@ -67,6 +67,12 @@ public final class SoundPlayer extends JavaPlugin {
         }
         return true;
     }
+    // InventoryがCloseされた時の処理
+    public static void onInventoryClose(Player player) {
+        Audience audience = searchAudience(player);
+        if (audience == null) return;
+        audience.setSoundInventory(null);
+    }
 
     // Getter
     public static MyConfig getMyConfig() {

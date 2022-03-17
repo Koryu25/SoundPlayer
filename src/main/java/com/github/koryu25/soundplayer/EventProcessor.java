@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -32,5 +33,11 @@ public class EventProcessor implements Listener {
         if (event.getClickedInventory().getType() == InventoryType.PLAYER) return;
         boolean b = SoundPlayer.onClick(event.getView().getTitle(), (Player) event.getWhoClicked(), event.getSlot());
         event.setCancelled(b);
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        if (!(event.getPlayer() instanceof Player)) return;
+        SoundPlayer.onInventoryClose((Player) event.getPlayer());
     }
 }
