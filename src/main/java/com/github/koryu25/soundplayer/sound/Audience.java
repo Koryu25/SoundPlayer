@@ -44,6 +44,12 @@ public class Audience {
         player.playSound(player.getLocation(), sound, volume, pitch);
     }
 
+    public void reset() {
+        volume = SoundPlayer.getMyConfig().getDefaultVolume();
+        pitch = SoundPlayer.getMyConfig().getDefaultPitch();
+        different = SoundPlayer.getMyConfig().getDefaultDifferent();
+    }
+
     // VolumeとPitchの情報を記したItemStackを取得
     public ItemStack toItemStack() {
         ItemStack itemStack = new ItemStack(Material.REDSTONE_BLOCK);

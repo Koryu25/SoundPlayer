@@ -10,12 +10,12 @@ public class MyConfig extends CustomConfig {
 
     // Getter
     public float getDefaultVolume() {
-        return (float) getConfig().getDouble("default.volume", 1d);
+        return (float) getConfig().getDouble("volume", 1d);
     }
     public float getDefaultPitch() {
-        return (float) getConfig().getDouble("default.pitch", 1d);
+        return (float) getConfig().getDouble("pitch", 1d);
     }
     public float getDefaultDifferent() {
-        return (float) getConfig().getDouble("default.different", 0.1d);
+        return (float) getConfig().getDouble("different", 0.1d);
     }
 }

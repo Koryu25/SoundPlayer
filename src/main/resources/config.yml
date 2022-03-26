@@ -1,5 +1,6 @@
-# 初期値
-default:
-  volume: 1
-  pitch: 1
-  different: 0.1
+# ボリュームの初期値
+volume: 1
+# ピッチの初期値
+pitch: 1
+# 変更差の初期値
+different: 0.1
