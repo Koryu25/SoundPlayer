@@ -1,7 +1,9 @@
 package com.github.koryu25.soundplayer.sound;
 
 import com.github.koryu25.soundplayer.SoundPlayer;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,15 +16,22 @@ public class Audience {
     private final Player player;
     private float volume;
     private float pitch;
+    private float different;
     private SoundInventory soundInventory = null;
 
     public Audience(Player player) {
-        this(player, SoundPlayer.getMyConfig().getDefaultVolume(), SoundPlayer.getMyConfig().getDefaultPitch());
+        this(
+                player,
+                SoundPlayer.getMyConfig().getDefaultVolume(),
+                SoundPlayer.getMyConfig().getDefaultPitch(),
+                SoundPlayer.getMyConfig().getDefaultDifferent()
+        );
     }
-    public Audience(Player player, float volume, float pitch) {
+    public Audience(Player player, float volume, float pitch, float different) {
         this.player = player;
         this.volume = volume;
         this.pitch = pitch;
+        this.different = different;
     }
 
     // SoundInventoryを開く(nullじゃなかったら)
@@ -37,25 +46,34 @@ public class Audience {
         ItemMeta meta = itemStack.getItemMeta();
         meta.setDisplayName("information");
         List<String> lore = new ArrayList<>();
-        lore.add("volume: " + String.format("%.3f", volume));
-        lore.add("pitch: " + String.format("%.3f", pitch));
+        lore.add(ChatColor.RED + "volume" + ChatColor.WHITE + ": " + String.format("%.3f", volume));
+        lore.add(ChatColor.AQUA + "pitch" + ChatColor.WHITE + ": " + String.format("%.3f", pitch));
+        lore.add(ChatColor.YELLOW + "different" + ChatColor.WHITE + ": " + String.format("%.3f", different));
         meta.setLore(lore);
         itemStack.setItemMeta(meta);
         return itemStack;
     }
 
+    // different
+    public void differentUp() {
+        different *= 10;
+    }
+    public void differentDown() {
+        different *= 0.1;
+    }
+
     // Upper, Downer
     public void volumeUp() {
-        volume += SoundPlayer.getMyConfig().getVolumeDifferent();
+        volume += different;
     }
     public void volumeDown() {
-        volume -= SoundPlayer.getMyConfig().getVolumeDifferent();
+        volume -= different;
     }
     public void pitchUp() {
-        pitch += SoundPlayer.getMyConfig().getPitchDifferent();
+        pitch += different;
     }
     public void pitchDown() {
-        pitch -= SoundPlayer.getMyConfig().getPitchDifferent();
+        pitch -= different;
     }
 
     // Getter
@@ -68,17 +86,14 @@ public class Audience {
     public float getPitch() {
         return pitch;
     }
+    public float getDifferent() {
+        return different;
+    }
     public SoundInventory getSoundInventory() {
         return soundInventory;
     }
 
     // Setter
-    public void setVolume(float volume) {
-        this.volume = volume;
-    }
-    public void setPitch(float pitch) {
-        this.pitch = pitch;
-    }
     public void setSoundInventory(SoundInventory soundInventory) {
         this.soundInventory = soundInventory;
     }

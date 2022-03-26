@@ -37,7 +37,8 @@ public class EventProcessor implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (!(event.getPlayer() instanceof Player)) return;
-        SoundPlayer.onInventoryClose((Player) event.getPlayer());
+        if (event.getPlayer() instanceof Player player) {
+            SoundPlayer.onInventoryClose(player);
+        }
     }
 }

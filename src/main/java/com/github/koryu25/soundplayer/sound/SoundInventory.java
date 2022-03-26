@@ -1,9 +1,9 @@
 package com.github.koryu25.soundplayer.sound;
 
-import com.github.koryu25.soundplayer.SoundPlayer;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -61,7 +61,7 @@ public class SoundInventory {
         ItemMeta previousPageMeta = previousPage.getItemMeta();
         previousPageMeta.setDisplayName("to previous page");
         List<String> pageLore = new ArrayList<>();
-        pageLore.add(currentPage + "/" + page);
+        pageLore.add("§9" + currentPage + "/" + page);
         previousPageMeta.setLore(pageLore);
         previousPage.setItemMeta(previousPageMeta);
         inventory.setItem(45, previousPage);
@@ -75,45 +75,65 @@ public class SoundInventory {
         updateVolume();
          // pitch
          updatePitch();
+         // different
+         updateDifferent();
          // information
          updateInformation();
     }
 
     // Volumeの情報、ItemStackを初期化
     public void updateVolume() {
-        String volumeDifferent = String.format("%.03f", SoundPlayer.getMyConfig().getVolumeDifferent());
-        ItemStack volumeUp = new ItemStack(Material.CHICKEN);
-        ItemMeta volumeUpMeta = volumeUp.getItemMeta();
-        volumeUpMeta.setDisplayName("volume down -" + volumeDifferent);
+        String different = String.format("%.03f", audience.getDifferent());
+        ItemStack volumeDown = new ItemStack(Material.CHICKEN);
+        ItemMeta volumeDownMeta = volumeDown.getItemMeta();
+        volumeDownMeta.setDisplayName("volume down -" + different);
         List<String> volumeLore = new ArrayList<>();
-        volumeLore.add("volume: " + String.format("%.03f", audience.getVolume()));
+        volumeLore.add(ChatColor.RED + "volume" + ChatColor.WHITE + ": " + String.format("%.03f", audience.getVolume()));
+        volumeDownMeta.setLore(volumeLore);
+        volumeDown.setItemMeta(volumeDownMeta);
+        inventory.setItem(46, volumeDown);
+        ItemStack volumeUp = new ItemStack(Material.COOKED_CHICKEN);
+        ItemMeta volumeUpMeta = volumeUp.getItemMeta();
+        volumeUpMeta.setDisplayName("volume up +" + different);
         volumeUpMeta.setLore(volumeLore);
         volumeUp.setItemMeta(volumeUpMeta);
         inventory.setItem(47, volumeUp);
-        ItemStack volumeDown = new ItemStack(Material.COOKED_CHICKEN);
-        ItemMeta volumeDownMeta = volumeDown.getItemMeta();
-        volumeDownMeta.setDisplayName("volume up +" + volumeDifferent);
-        volumeDownMeta.setLore(volumeLore);
-        volumeDown.setItemMeta(volumeDownMeta);
-        inventory.setItem(48, volumeDown);
     }
     // Pitchの情報、ItemStackを初期化
     public void updatePitch() {
-        String pitchDifferent = String.format("%.03f", SoundPlayer.getMyConfig().getPitchDifferent());
-        ItemStack pitchUp = new ItemStack(Material.LIGHT_BLUE_DYE);
-        ItemMeta pitchUpMeta = pitchUp.getItemMeta();
-        pitchUpMeta.setDisplayName("pitch down -" + pitchDifferent);
-        List<String> pitchLore = new ArrayList<>();
-        pitchLore.add("pitch: " + String.format("%.03f", audience.getPitch()));
-        pitchUpMeta.setLore(pitchLore);
-        pitchUp.setItemMeta(pitchUpMeta);
-        inventory.setItem(50, pitchUp);
-        ItemStack pitchDown = new ItemStack(Material.RED_DYE);
+        String different = String.format("%.03f", audience.getDifferent());
+        ItemStack pitchDown = new ItemStack(Material.LIGHT_BLUE_DYE);
         ItemMeta pitchDownMeta = pitchDown.getItemMeta();
-        pitchDownMeta.setDisplayName("pitch up +" + pitchDifferent);
+        pitchDownMeta.setDisplayName("pitch down -" + different);
+        List<String> pitchLore = new ArrayList<>();
+        pitchLore.add(ChatColor.AQUA + "pitch" + ChatColor.WHITE + ": " + String.format("%.03f", audience.getPitch()));
         pitchDownMeta.setLore(pitchLore);
         pitchDown.setItemMeta(pitchDownMeta);
         inventory.setItem(51, pitchDown);
+        ItemStack pitchUp = new ItemStack(Material.RED_DYE);
+        ItemMeta pitchUpMeta = pitchUp.getItemMeta();
+        pitchUpMeta.setDisplayName("pitch up +" + different);
+        pitchUpMeta.setLore(pitchLore);
+        pitchUp.setItemMeta(pitchUpMeta);
+        inventory.setItem(52, pitchUp);
+    }
+    // Differentの情報、ItemStackを初期化
+    public void updateDifferent() {
+        String different = String.format("%.3f", audience.getDifferent());
+        ItemStack differentDown = new ItemStack(Material.OAK_SLAB);
+        ItemMeta differentDownMeta = differentDown.getItemMeta();
+        differentDownMeta.setDisplayName("different * 0.1");
+        List<String> differentLore = new ArrayList<>();
+        differentLore.add(ChatColor.YELLOW + "different" + ChatColor.WHITE + ": " + different);
+        differentDownMeta.setLore(differentLore);
+        differentDown.setItemMeta(differentDownMeta);
+        inventory.setItem(48, differentDown);
+        ItemStack differentUp = new ItemStack(Material.OAK_PLANKS);
+        ItemMeta differentUpMeta = differentUp.getItemMeta();
+        differentUpMeta.setDisplayName("different * 10");
+        differentUpMeta.setLore(differentLore);
+        differentUp.setItemMeta(differentUpMeta);
+        inventory.setItem(50, differentUp);
     }
     // VolumeとPitchの情報が記されたItemStackを初期化
     public void updateInformation() {
@@ -145,30 +165,44 @@ public class SoundInventory {
             return;
         }
         // volume down
-        if (slot == 47) {
+        if (slot == 46) {
             audience.volumeDown();
             updateVolume();
             updateInformation();
             return;
         }
         // volume up
-        if (slot == 48) {
+        if (slot == 47) {
             audience.volumeUp();
             updateVolume();
             updateInformation();
             return;
         }
         // pitch down
-        if (slot == 50) {
+        if (slot == 51) {
             audience.pitchDown();
             updatePitch();
             updateInformation();
             return;
         }
         // pitch up
-        if (slot == 51) {
+        if (slot == 52) {
             audience.pitchUp();
             updatePitch();
+            updateInformation();
+            return;
+        }
+        // different down
+        if (slot == 48) {
+            audience.differentDown();
+            updateDifferent();
+            updateInformation();
+            return;
+        }
+        // different up
+        if (slot == 50) {
+            audience.differentUp();
+            updateDifferent();
             updateInformation();
             return;
         }
