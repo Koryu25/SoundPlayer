@@ -34,11 +34,4 @@ public class EventProcessor implements Listener {
         boolean b = SoundPlayer.onClick(event.getView().getTitle(), (Player) event.getWhoClicked(), event.getSlot());
         event.setCancelled(b);
     }
-
-    @EventHandler
-    public void onInventoryClose(InventoryCloseEvent event) {
-        if (event.getPlayer() instanceof Player player) {
-            SoundPlayer.onInventoryClose(player);
-        }
-    }
 }

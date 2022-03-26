@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -152,6 +153,7 @@ public class SoundInventory {
             initializeMaxSlot();
             initializeInventory();
             audience.open();
+            audience.playSound(Sound.ENTITY_ARROW_SHOOT, 1f, 0.8f);
             return;
         }
         // 次のページ
@@ -162,6 +164,7 @@ public class SoundInventory {
             initializeMaxSlot();
             initializeInventory();
             audience.open();
+            audience.playSound(Sound.ENTITY_ARROW_SHOOT, 1f, 0.8f);
             return;
         }
         // volume down
@@ -169,6 +172,7 @@ public class SoundInventory {
             audience.volumeDown();
             updateVolume();
             updateInformation();
+            audience.playSound(Sound.UI_BUTTON_CLICK, 1, 0.8f);
             return;
         }
         // volume up
@@ -176,6 +180,7 @@ public class SoundInventory {
             audience.volumeUp();
             updateVolume();
             updateInformation();
+            audience.playSound(Sound.UI_BUTTON_CLICK, 1, 1.3f);
             return;
         }
         // pitch down
@@ -183,6 +188,7 @@ public class SoundInventory {
             audience.pitchDown();
             updatePitch();
             updateInformation();
+            audience.playSound(Sound.UI_BUTTON_CLICK, 1, 0.8f);
             return;
         }
         // pitch up
@@ -190,6 +196,7 @@ public class SoundInventory {
             audience.pitchUp();
             updatePitch();
             updateInformation();
+            audience.playSound(Sound.UI_BUTTON_CLICK, 1, 1.3f);
             return;
         }
         // different down
@@ -197,6 +204,7 @@ public class SoundInventory {
             audience.differentDown();
             updateDifferent();
             updateInformation();
+            audience.playSound(Sound.UI_BUTTON_CLICK, 1, 0.8f);
             return;
         }
         // different up
@@ -204,6 +212,7 @@ public class SoundInventory {
             audience.differentUp();
             updateDifferent();
             updateInformation();
+            audience.playSound(Sound.UI_BUTTON_CLICK, 1, 1.3f);
             return;
         }
     }

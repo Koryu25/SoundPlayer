@@ -40,6 +40,10 @@ public class Audience {
         player.openInventory(soundInventory.getInventory());
     }
 
+    public void playSound(Sound sound, float volume, float pitch) {
+        player.playSound(player.getLocation(), sound, volume, pitch);
+    }
+
     // VolumeとPitchの情報を記したItemStackを取得
     public ItemStack toItemStack() {
         ItemStack itemStack = new ItemStack(Material.REDSTONE_BLOCK);
