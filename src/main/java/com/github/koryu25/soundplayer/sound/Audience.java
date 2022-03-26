@@ -54,11 +54,11 @@ public class Audience {
     public ItemStack toItemStack() {
         ItemStack itemStack = new ItemStack(Material.REDSTONE_BLOCK);
         ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName("information");
+        meta.setDisplayName("情報");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.RED + "volume" + ChatColor.WHITE + ": " + String.format("%.3f", volume));
-        lore.add(ChatColor.AQUA + "pitch" + ChatColor.WHITE + ": " + String.format("%.3f", pitch));
-        lore.add(ChatColor.YELLOW + "different" + ChatColor.WHITE + ": " + String.format("%.3f", different));
+        lore.add(ChatColor.RED + "ボリューム" + ChatColor.WHITE + ": " + String.format("%.3f", volume));
+        lore.add(ChatColor.AQUA + "ピッチ" + ChatColor.WHITE + ": " + String.format("%.3f", pitch));
+        lore.add(ChatColor.YELLOW + "変更差" + ChatColor.WHITE + ": " + String.format("%.3f", different));
         meta.setLore(lore);
         itemStack.setItemMeta(meta);
         return itemStack;
