@@ -2,6 +2,8 @@ package com.github.koryu25.soundplayer;
 
 import com.github.koryu25.soundplayer.command.CommandManager;
 import com.github.koryu25.soundplayer.config.MyConfig;
+import com.github.koryu25.soundplayer.config.lang.Lang;
+import com.github.koryu25.soundplayer.config.lang.LangConfig;
 import com.github.koryu25.soundplayer.sound.AllSoundDataList;
 import com.github.koryu25.soundplayer.sound.Audience;
 import com.github.koryu25.soundplayer.sound.SoundInventory;
@@ -14,13 +16,18 @@ import java.util.List;
 public final class SoundPlayer extends JavaPlugin {
 
     private static MyConfig myConfig;
+    private static LangConfig langConfig;
 
     private static List<Audience> audienceList;
+
+
 
     @Override
     public void onEnable() {
         // Config
         myConfig = new MyConfig(this);
+        //langConfig
+        langConfig = new LangConfig(this, "lang/" + myConfig.getLang().getPath());
         // SoundList
         AllSoundDataList.initialize();
         // Command
@@ -77,6 +84,9 @@ public final class SoundPlayer extends JavaPlugin {
     // Getter
     public static MyConfig getMyConfig() {
         return myConfig;
+    }
+    public static LangConfig getLangConfig() {
+        return langConfig;
     }
     public static List<Audience> getAudienceList() {
         return audienceList;

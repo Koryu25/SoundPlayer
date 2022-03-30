@@ -1,0 +1,17 @@
+volume: "Volume"
+pitch: "Pitch"
+difference: "Difference"
+multiply: "multiply"
+down: "down"
+up: "up"
+previous_page: "to previous page"
+next_page: "to next page"
+
+# command messages
+reset_message: "Volume, pitch, and change difference reset."
+help_messages:
+  - "=== SoundPlayer CommandHelp ==="
+  - "/sp -> Show all sounds"
+  - "/sp reset -> Reset Volume, Pitch and difference"
+  - "/sp search [string] -> Show sounds contains [string]"
+  - "============================="

@@ -1,6 +1,7 @@
 package com.github.koryu25.soundplayer.sound;
 
 import com.github.koryu25.soundplayer.SoundPlayer;
+import com.github.koryu25.soundplayer.config.lang.LangConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -52,13 +53,14 @@ public class Audience {
 
     // VolumeとPitchの情報を記したItemStackを取得
     public ItemStack toItemStack() {
+        LangConfig lang = SoundPlayer.getLangConfig();
         ItemStack itemStack = new ItemStack(Material.REDSTONE_BLOCK);
         ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName("情報");
+        meta.setDisplayName("Information");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.RED + "ボリューム" + ChatColor.WHITE + ": " + String.format("%.3f", volume));
-        lore.add(ChatColor.AQUA + "ピッチ" + ChatColor.WHITE + ": " + String.format("%.3f", pitch));
-        lore.add(ChatColor.YELLOW + "変更差" + ChatColor.WHITE + ": " + String.format("%.3f", different));
+        lore.add(ChatColor.RED + lang.getVolume() + ChatColor.WHITE + ": " + String.format("%.3f", volume));
+        lore.add(ChatColor.AQUA + lang.getPitch() + ChatColor.WHITE + ": " + String.format("%.3f", pitch));
+        lore.add(ChatColor.YELLOW + lang.getDifference() + ChatColor.WHITE + ": " + String.format("%.3f", different));
         meta.setLore(lore);
         itemStack.setItemMeta(meta);
         return itemStack;
