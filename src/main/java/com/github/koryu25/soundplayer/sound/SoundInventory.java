@@ -203,6 +203,8 @@ public class SoundInventory {
         if (slot == 48) {
             audience.differentDown();
             updateDifferent();
+            updateVolume();
+            updatePitch();
             updateInformation();
             audience.playSound(Sound.UI_BUTTON_CLICK, 1, 0.8f);
             return;
@@ -211,6 +213,8 @@ public class SoundInventory {
         if (slot == 50) {
             audience.differentUp();
             updateDifferent();
+            updateVolume();
+            updatePitch();
             updateInformation();
             audience.playSound(Sound.UI_BUTTON_CLICK, 1, 1.3f);
             return;
