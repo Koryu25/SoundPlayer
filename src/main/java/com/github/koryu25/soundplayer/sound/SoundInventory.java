@@ -1,5 +1,7 @@
 package com.github.koryu25.soundplayer.sound;
 
+import com.github.koryu25.soundplayer.SoundPlayer;
+import com.github.koryu25.soundplayer.config.lang.LangConfig;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -53,6 +55,7 @@ public class SoundInventory {
 
     // Inventoryを初期化
      private void initializeInventory() {
+         LangConfig lang = SoundPlayer.getLangConfig();
         // sound
          for (int index = 0; index < maxSlot; index++) {
              inventory.setItem(index, soundDataList.get(currentPage * 45 + index).getItemStack());
@@ -60,7 +63,7 @@ public class SoundInventory {
         // page
         ItemStack previousPage = new ItemStack(Material.ARROW);
         ItemMeta previousPageMeta = previousPage.getItemMeta();
-        previousPageMeta.setDisplayName("前のページへ");
+        previousPageMeta.setDisplayName(lang.getPreviousPage());
         List<String> pageLore = new ArrayList<>();
         pageLore.add("§9" + currentPage + "/" + page);
         previousPageMeta.setLore(pageLore);
@@ -68,7 +71,7 @@ public class SoundInventory {
         inventory.setItem(45, previousPage);
         ItemStack nextPage = new ItemStack(Material.ARROW);
         ItemMeta nextPageMeta = nextPage.getItemMeta();
-        nextPageMeta.setDisplayName("次のページへ");
+        nextPageMeta.setDisplayName(lang.getNextPage());
         nextPageMeta.setLore(pageLore);
         nextPage.setItemMeta(nextPageMeta);
         inventory.setItem(53, nextPage);
@@ -84,54 +87,60 @@ public class SoundInventory {
 
     // Volumeの情報、ItemStackを初期化
     public void updateVolume() {
+        LangConfig lang = SoundPlayer.getLangConfig();
+
         String different = String.format("%.03f", audience.getDifferent());
         ItemStack volumeDown = new ItemStack(Material.CHICKEN);
         ItemMeta volumeDownMeta = volumeDown.getItemMeta();
-        volumeDownMeta.setDisplayName("ボリュームダウン -" + different);
+        volumeDownMeta.setDisplayName(lang.getVolume() + lang.getDown() + " -" + different);
         List<String> volumeLore = new ArrayList<>();
-        volumeLore.add(ChatColor.RED + "ボリューム" + ChatColor.WHITE + ": " + String.format("%.03f", audience.getVolume()));
+        volumeLore.add(ChatColor.RED + lang.getVolume() + ChatColor.WHITE + ": " + String.format("%.03f", audience.getVolume()));
         volumeDownMeta.setLore(volumeLore);
         volumeDown.setItemMeta(volumeDownMeta);
         inventory.setItem(46, volumeDown);
         ItemStack volumeUp = new ItemStack(Material.COOKED_CHICKEN);
         ItemMeta volumeUpMeta = volumeUp.getItemMeta();
-        volumeUpMeta.setDisplayName("ボリュームアップ +" + different);
+        volumeUpMeta.setDisplayName(lang.getVolume() + lang.getUp() + " +" + different);
         volumeUpMeta.setLore(volumeLore);
         volumeUp.setItemMeta(volumeUpMeta);
         inventory.setItem(47, volumeUp);
     }
     // Pitchの情報、ItemStackを初期化
     public void updatePitch() {
+        LangConfig lang = SoundPlayer.getLangConfig();
+
         String different = String.format("%.03f", audience.getDifferent());
         ItemStack pitchDown = new ItemStack(Material.LIGHT_BLUE_DYE);
         ItemMeta pitchDownMeta = pitchDown.getItemMeta();
-        pitchDownMeta.setDisplayName("ピッチダウン -" + different);
+        pitchDownMeta.setDisplayName(lang.getPitch() + lang.getDown() + " -" + different);
         List<String> pitchLore = new ArrayList<>();
-        pitchLore.add(ChatColor.AQUA + "ピッチ" + ChatColor.WHITE + ": " + String.format("%.03f", audience.getPitch()));
+        pitchLore.add(ChatColor.AQUA + lang.getPitch() + ChatColor.WHITE + ": " + String.format("%.03f", audience.getPitch()));
         pitchDownMeta.setLore(pitchLore);
         pitchDown.setItemMeta(pitchDownMeta);
         inventory.setItem(51, pitchDown);
         ItemStack pitchUp = new ItemStack(Material.RED_DYE);
         ItemMeta pitchUpMeta = pitchUp.getItemMeta();
-        pitchUpMeta.setDisplayName("ピッチアップ +" + different);
+        pitchUpMeta.setDisplayName(lang.getPitch() + lang.getUp() + " +" + different);
         pitchUpMeta.setLore(pitchLore);
         pitchUp.setItemMeta(pitchUpMeta);
         inventory.setItem(52, pitchUp);
     }
     // Differentの情報、ItemStackを初期化
     public void updateDifferent() {
+        LangConfig lang = SoundPlayer.getLangConfig();
+
         String different = String.format("%.3f", audience.getDifferent());
         ItemStack differentDown = new ItemStack(Material.OAK_SLAB);
         ItemMeta differentDownMeta = differentDown.getItemMeta();
-        differentDownMeta.setDisplayName("変更差0.1倍");
+        differentDownMeta.setDisplayName(lang.getDifference() + " 0.1 " + lang.getMultiply());
         List<String> differentLore = new ArrayList<>();
-        differentLore.add(ChatColor.YELLOW + "変更差" + ChatColor.WHITE + ": " + different);
+        differentLore.add(ChatColor.YELLOW + lang.getDifference() + ChatColor.WHITE + ": " + different);
         differentDownMeta.setLore(differentLore);
         differentDown.setItemMeta(differentDownMeta);
         inventory.setItem(48, differentDown);
         ItemStack differentUp = new ItemStack(Material.OAK_PLANKS);
         ItemMeta differentUpMeta = differentUp.getItemMeta();
-        differentUpMeta.setDisplayName("変更差10倍");
+        differentUpMeta.setDisplayName(lang.getDifference() + " 10 " + lang.getMultiply());
         differentUpMeta.setLore(differentLore);
         differentUp.setItemMeta(differentUpMeta);
         inventory.setItem(50, differentUp);

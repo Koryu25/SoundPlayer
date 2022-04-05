@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
 }
 
 group = 'com.github.koryu25'
@@ -17,8 +18,10 @@ repositories {
     }
 }
 
+
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+    implementation 'commons-io:commons-io:2.7'
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
@@ -26,6 +29,17 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
+shadowJar {
+    dependencies {
+        exclude(dependency('org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'))
+        exclude(dependency('org.projectlombok:lombok:1.18.22'))
+        exclude(dependency('org.projectlombok:lombok:1.18.22'))
+    }
+}
+
+build.dependsOn shadowJar
+
+task shadowBuild(dependsOn: [shadowJar, build])
 
 def targetJavaVersion = 16
 java {

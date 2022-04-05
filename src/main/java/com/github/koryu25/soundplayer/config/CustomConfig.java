@@ -1,20 +1,20 @@
 package com.github.koryu25.soundplayer.config;
 
 import com.github.koryu25.soundplayer.SoundPlayer;
+import org.apache.commons.io.FileUtils;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 
 public class CustomConfig {
 
     private final SoundPlayer main;
-    private FileConfiguration config = null;
+    private FileConfiguration config;
     private final File configFile;
     private final String fileName;
 
@@ -22,6 +22,9 @@ public class CustomConfig {
         this.main = main;
         this.fileName = fileName;
         this.configFile = new File(main.getDataFolder(), fileName);
+
+        config = new YamlConfiguration();
+
         saveDefaultConfig();
         reloadConfig();
     }
@@ -49,9 +52,23 @@ public class CustomConfig {
     }
 
     public void reloadConfig() {
-        config = YamlConfiguration.loadConfiguration(configFile);
-        final InputStream defConfigStream = main.getResource(fileName);
-        if (defConfigStream == null) return;
-        config.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, StandardCharsets.UTF_8)));
+        try {
+            this.config.load(configFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        InputStream defaultConfigStream = this.main.getResource(fileName);
+        if (defaultConfigStream != null)
+        {
+            File file = new File(main.getDataFolder(), fileName);
+            try {
+                FileUtils.copyInputStreamToFile(defaultConfigStream,file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(file);
+            this.config.setDefaults(defaultConfig);
+        }
     }
 }
