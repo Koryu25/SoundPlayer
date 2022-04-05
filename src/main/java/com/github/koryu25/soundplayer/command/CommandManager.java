@@ -1,6 +1,7 @@
 package com.github.koryu25.soundplayer.command;
 
 import com.github.koryu25.soundplayer.SoundPlayer;
+import com.github.koryu25.soundplayer.config.lang.LangConfig;
 import com.github.koryu25.soundplayer.sound.AllSoundDataList;
 import com.github.koryu25.soundplayer.sound.Audience;
 import com.github.koryu25.soundplayer.sound.SoundInventory;
@@ -18,6 +19,8 @@ public class CommandManager implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        LangConfig lang = SoundPlayer.getLangConfig();
+
         if (!(sender instanceof Player player)) return true;
         Audience audience = SoundPlayer.searchAudience(player);
         // sp
@@ -29,13 +32,13 @@ public class CommandManager implements CommandExecutor {
         if (args.length == 1) {
             // sp help
             if (args[0].equalsIgnoreCase("help")) {
-                sendHelp(player);
+                lang.getHelpMessages().forEach(s -> player.sendMessage(s));
                 return true;
             }
             // sp reset
             if (args[0].equalsIgnoreCase("reset")) {
                 audience.reset();
-                player.sendMessage("ボリューム、ピッチ、変更差をリセットしました");
+                player.sendMessage(lang.getResetMessage());
                 return true;
             }
         }
@@ -47,15 +50,7 @@ public class CommandManager implements CommandExecutor {
             audience.open();
             return true;
         }
-        sendHelp(player);
+        lang.getHelpMessages().forEach(s -> player.sendMessage(s));
         return true;
-    }
-
-    private void sendHelp(Player player) {
-        player.sendMessage("=== SoundPlayer CommandHelp ===");
-        player.sendMessage("/sp ですべてのサウンドを表示");
-        player.sendMessage("/sp reset でボリューム、ピッチ、変更差をリセット");
-        player.sendMessage("/sp search [string] で[string]が含まれるサウンドを表示");
-        player.sendMessage("=============================");
     }
 }

@@ -1,0 +1,17 @@
+volume: "ボリューム"
+pitch: "ピッチ"
+difference: "変更差"
+multiply: "倍"
+down: "ダウン"
+up: "アップ"
+previous_page: "前のページへ"
+next_page: "次のページへ"
+
+# コマンド実行時のメッセージ
+reset_message: "ボリューム、ピッチ、変更差をリセットしました"
+help_messages:
+  - "=== SoundPlayer CommandHelp ==="
+  - "/sp ですべてのサウンドを表示"
+  - "/sp reset でボリューム、ピッチ、変更差をリセット"
+  - "/sp search [string] で[string]が含まれるサウンドを表示"
+  - "============================="
