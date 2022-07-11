@@ -31,6 +31,8 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 
     compileOnly "dev.jorel:commandapi-core:8.4.1"
+    compileOnly "dev.jorel:commandapi-annotations:8.4.1"
+    annotationProcessor "dev.jorel:commandapi-annotations:8.4.1"
 }
 
 task shadowBuild(dependsOn: [shadowJar, build])
