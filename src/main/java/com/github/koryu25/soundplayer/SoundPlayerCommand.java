@@ -11,7 +11,7 @@ import dev.jorel.commandapi.annotations.arguments.AStringArgument;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Command("sp")
+@Command("sr")
 public class SoundPlayerCommand {
 
     @Default
@@ -20,7 +20,7 @@ public class SoundPlayerCommand {
     }
 
     @Subcommand("all")
-    @Permission("sp.all")
+    @Permission("sr.all")
     public static void all(Player player) {
         Audience audience = SoundPlayer.searchAudience(player);
         audience.setSoundInventory(new SoundInventory(audience, AllSoundDataList.get(), ""));
@@ -28,7 +28,7 @@ public class SoundPlayerCommand {
     }
 
     @Subcommand("reset")
-    @Permission("sp.reset")
+    @Permission("sr.reset")
     public static void reset(Player player) {
         Audience audience = SoundPlayer.searchAudience(player);
         audience.reset();
@@ -36,7 +36,7 @@ public class SoundPlayerCommand {
     }
 
     @Subcommand("search")
-    @Permission("sp.search")
+    @Permission("sr.search")
     public static void search(
             Player player,
             @AStringArgument String keyWord) {

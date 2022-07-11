@@ -18,21 +18,18 @@ public final class SoundPlayer extends JavaPlugin {
 
     private static List<Audience> audienceList;
 
-
-
     @Override
     public void onEnable() {
-        // Config
         myConfig = new MyConfig(this);
-        //langConfig
+
         langConfig = new LangConfig(this, "lang/" + myConfig.getLang().getPath());
-        // SoundList
+
         AllSoundDataList.initialize();
-        // Command
+
         CommandAPI.registerCommand(SoundPlayerCommand.class);
-        // EventListener
-        new EventProcessor(this);
-        // AudienceList
+
+        new EventListener(this);
+
         audienceList = new ArrayList<>();
     }
 
