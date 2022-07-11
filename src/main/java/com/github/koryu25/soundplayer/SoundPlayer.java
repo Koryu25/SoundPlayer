@@ -1,12 +1,11 @@
 package com.github.koryu25.soundplayer;
 
-import com.github.koryu25.soundplayer.command.CommandManager;
 import com.github.koryu25.soundplayer.config.MyConfig;
-import com.github.koryu25.soundplayer.config.lang.Lang;
 import com.github.koryu25.soundplayer.config.lang.LangConfig;
 import com.github.koryu25.soundplayer.sound.AllSoundDataList;
 import com.github.koryu25.soundplayer.sound.Audience;
 import com.github.koryu25.soundplayer.sound.SoundInventory;
+import dev.jorel.commandapi.CommandAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,7 +30,7 @@ public final class SoundPlayer extends JavaPlugin {
         // SoundList
         AllSoundDataList.initialize();
         // Command
-        new CommandManager(this);
+        CommandAPI.registerCommand(SoundPlayerCommand.class);
         // EventListener
         new EventProcessor(this);
         // AudienceList

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class SoundInventory {
 
-    public static final String title = "[Sound Player]";
+    public static final String TITLE = "[Sound Player]";
 
     private Audience audience;
     private List<SoundData> soundDataList;
@@ -36,7 +36,7 @@ public class SoundInventory {
         this.audience = audience;
         this.soundDataList = soundDataList;
         currentPage = 0;
-        inventory = Bukkit.createInventory(null, 54, title + suffix);
+        inventory = Bukkit.createInventory(null, 54, TITLE + suffix);
         // pageを算出
         page = soundDataList.size() / 45;
         if (soundDataList.size() % 45 > 0) page++;
@@ -234,8 +234,8 @@ public class SoundInventory {
     // Inventoryのtitleが合致するか確認するメソッド
     public static boolean match(String invTitle) {
         try {
-            invTitle = invTitle.substring(0, title.length());
-            return invTitle.equals(title);
+            invTitle = invTitle.substring(0, TITLE.length());
+            return invTitle.equals(TITLE);
         } catch (StringIndexOutOfBoundsException e) {
             return false;
         }
