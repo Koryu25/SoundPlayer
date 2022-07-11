@@ -4,7 +4,6 @@ import com.github.koryu25.soundplayer.config.MyConfig;
 import com.github.koryu25.soundplayer.config.lang.LangConfig;
 import com.github.koryu25.soundplayer.sound.AllSoundDataList;
 import com.github.koryu25.soundplayer.sound.Audience;
-import com.github.koryu25.soundplayer.sound.SoundInventory;
 import dev.jorel.commandapi.CommandAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,44 +41,6 @@ public final class SoundPlayer extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    // Audienceを検索
-    public static Audience searchAudience(Player player) {
-        for (Audience audience : audienceList) {
-            if (audience.getPlayer().getUniqueId().toString().equals(player.getUniqueId().toString())) {
-                return audience;
-            }
-        }
-        return null;
-    }
-
-    // PlayerがJoinした時の処理
-    public static void join(Player player) {
-        Audience audience = searchAudience(player);
-        if (audience != null) return;
-        audienceList.add(new Audience(player));
-    }
-    // PlayerがQuitした時の処理
-    public static void quit(Player player) {
-        Audience audience = searchAudience(player);
-        if (audience == null) return;
-        audienceList.remove(audience);
-    }
-    // InventoryをClickした時の処理
-    public static boolean onClick(String title, Player player, int slot) {
-        if (!SoundInventory.match(title)) return false;
-        Audience audience = searchAudience(player);
-        if (audience != null) {
-            audience.getSoundInventory().onClick(slot);
-        }
-        return true;
-    }
-    // InventoryがCloseされた時の処理
-    public static void onInventoryClose(Player player) {
-        Audience audience = searchAudience(player);
-        if (audience == null) return;
-        audience.setSoundInventory(null);
-    }
-
     // Getter
     public static MyConfig getMyConfig() {
         return myConfig;
@@ -89,5 +50,15 @@ public final class SoundPlayer extends JavaPlugin {
     }
     public static List<Audience> getAudienceList() {
         return audienceList;
+    }
+
+    // Audienceを検索
+    public static Audience searchAudience(Player player) {
+        for (Audience audience : audienceList) {
+            if (audience.getPlayer().getUniqueId().toString().equals(player.getUniqueId().toString())) {
+                return audience;
+            }
+        }
+        return null;
     }
 }
