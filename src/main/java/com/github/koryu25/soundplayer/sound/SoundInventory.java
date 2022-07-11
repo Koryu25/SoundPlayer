@@ -1,7 +1,7 @@
 package com.github.koryu25.soundplayer.sound;
 
 import com.github.koryu25.soundplayer.SoundPlayer;
-import com.github.koryu25.soundplayer.config.lang.LangConfig;
+import com.github.koryu25.soundplayer.yaml.lang.LangConfig;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SoundInventory {
@@ -21,12 +22,12 @@ public class SoundInventory {
 
     private Audience audience;
     private List<SoundData> soundDataList;
-    private int page;// ページ数
-    private int maxSlot;// 現在のページの最後尾slot
+    private int page;//ページ数
+    private int maxSlot;//現在のページの最後尾slot
 
     @Getter
     @Setter
-    private int currentPage;// 現在のページ
+    private int currentPage;//現在のページ
 
     @Getter
     private Inventory inventory;
@@ -37,55 +38,63 @@ public class SoundInventory {
         this.soundDataList = soundDataList;
         currentPage = 0;
         inventory = Bukkit.createInventory(null, 54, TITLE + suffix);
-        // pageを算出
+
+        //pageを算出
         page = soundDataList.size() / 45;
         if (soundDataList.size() % 45 > 0) page++;
         page--;
-        // 初期化
+
+        //maxSlotとInventoryを初期化
         initializeMaxSlot();
         initializeInventory();
     }
 
-    // maxSlotを初期化
+    //maxSlotを初期化
     private void initializeMaxSlot() {
         if (page == -1) maxSlot = -1;
         else if (currentPage == page) maxSlot = soundDataList.size() % 45;
         else maxSlot = 45;
     }
 
-    // Inventoryを初期化
+    //Inventoryを初期化
      private void initializeInventory() {
          LangConfig lang = SoundPlayer.getLangConfig();
-        // sound
-         for (int index = 0; index < maxSlot; index++) {
+
+         for (int index = 0; index < maxSlot; index++) { //サウンドデータを可能な限り追加する
              inventory.setItem(index, soundDataList.get(currentPage * 45 + index).getItemStack());
          }
-        // page
-        ItemStack previousPage = new ItemStack(Material.ARROW);
-        ItemMeta previousPageMeta = previousPage.getItemMeta();
-        previousPageMeta.setDisplayName(lang.getPreviousPage());
-        List<String> pageLore = new ArrayList<>();
-        pageLore.add("§9" + currentPage + "/" + page);
-        previousPageMeta.setLore(pageLore);
-        previousPage.setItemMeta(previousPageMeta);
-        inventory.setItem(45, previousPage);
-        ItemStack nextPage = new ItemStack(Material.ARROW);
-        ItemMeta nextPageMeta = nextPage.getItemMeta();
-        nextPageMeta.setDisplayName(lang.getNextPage());
-        nextPageMeta.setLore(pageLore);
-        nextPage.setItemMeta(nextPageMeta);
-        inventory.setItem(53, nextPage);
-        // volume
-        updateVolume();
-         // pitch
+
+         //ページ操作のアイテムを生成
+         String pageLore = "§9" + currentPage + "/" + page;
+         ItemStack previousPage = createItemStack(
+                 Material.ARROW,
+                 lang.getPreviousPage(),
+                 pageLore
+         );
+         inventory.setItem(45, previousPage);
+         ItemStack nextPage = createItemStack(
+                 Material.ARROW,
+                 lang.getNextPage(),
+                 pageLore
+         );
+         inventory.setItem(53, nextPage);
+
+         // 音量操作のアイテムを生成
+         updateVolume();
+
+         // 音の高さを操作するアイテムを生成
          updatePitch();
-         // different
+
+         // 変更差を操作するアイテムを生成
          updateDifferent();
-         // information
+
+         // 現在の情報が見れるアイテムの生成
          updateInformation();
     }
 
-    // Volumeの情報、ItemStackを初期化
+    /**
+     * Volumeの情報、ItemStackを初期化
+     */
     public void updateVolume() {
         LangConfig lang = SoundPlayer.getLangConfig();
 
@@ -105,7 +114,10 @@ public class SoundInventory {
         volumeUp.setItemMeta(volumeUpMeta);
         inventory.setItem(47, volumeUp);
     }
-    // Pitchの情報、ItemStackを初期化
+
+    /**
+     * Pitchの情報、ItemStackを初期化
+     */
     public void updatePitch() {
         LangConfig lang = SoundPlayer.getLangConfig();
 
@@ -125,7 +137,10 @@ public class SoundInventory {
         pitchUp.setItemMeta(pitchUpMeta);
         inventory.setItem(52, pitchUp);
     }
-    // Differentの情報、ItemStackを初期化
+
+    /**
+     * Differentの情報、ItemStackを初期化
+     */
     public void updateDifferent() {
         LangConfig lang = SoundPlayer.getLangConfig();
 
@@ -145,15 +160,23 @@ public class SoundInventory {
         differentUp.setItemMeta(differentUpMeta);
         inventory.setItem(50, differentUp);
     }
-    // VolumeとPitchの情報が記されたItemStackを初期化
+
+    /**
+     * VolumeとPitchの情報が記されたItemStackを初期化
+     */
     public void updateInformation() {
         inventory.setItem(49, audience.toItemStack());
     }
 
-    // クリック時の処理
+    /**
+     * クリック時の処理
+     * @param slot クリックしたスロット
+     */
     public void onClick(int slot) {
         // サウンド再生
         if (slot < maxSlot) soundDataList.get(currentPage * 45 + slot).play(audience);
+
+
         // 前のページ
         if (slot == 45) {
             // ページが存在するか
@@ -176,6 +199,8 @@ public class SoundInventory {
             audience.playSound(Sound.ENTITY_ARROW_SHOOT, 1f, 0.8f);
             return;
         }
+
+
         // volume down
         if (slot == 46) {
             audience.volumeDown();
@@ -192,6 +217,8 @@ public class SoundInventory {
             audience.playSound(Sound.UI_BUTTON_CLICK, 1, 1.3f);
             return;
         }
+
+
         // pitch down
         if (slot == 51) {
             audience.pitchDown();
@@ -208,6 +235,8 @@ public class SoundInventory {
             audience.playSound(Sound.UI_BUTTON_CLICK, 1, 1.3f);
             return;
         }
+
+
         // different down
         if (slot == 48) {
             audience.differentDown();
@@ -230,8 +259,11 @@ public class SoundInventory {
         }
     }
 
-
-    // Inventoryのtitleが合致するか確認するメソッド
+    /**
+     * SoundPlayerのインベントリであるか確認します
+     * @param invTitle インベントリのタイトル
+     * @return SoundPlayerのインベントリであればtrue
+     */
     public static boolean match(String invTitle) {
         try {
             invTitle = invTitle.substring(0, TITLE.length());
@@ -239,5 +271,21 @@ public class SoundInventory {
         } catch (StringIndexOutOfBoundsException e) {
             return false;
         }
+    }
+
+    /**
+     * 簡易的にItemStackを生成します
+     * @param material ItemStackのマテリアル
+     * @param name ItemStackの表示名
+     * @param lore ItemStackのlore
+     * @return 生成されたItemStack
+     */
+    public static ItemStack createItemStack(Material material, String name, String... lore) {
+        ItemStack itemStack = new ItemStack(material);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(name);
+        itemMeta.setLore(Arrays.asList(lore));
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
     }
 }

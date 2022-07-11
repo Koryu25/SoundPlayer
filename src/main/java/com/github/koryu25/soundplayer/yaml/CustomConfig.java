@@ -1,4 +1,4 @@
-package com.github.koryu25.soundplayer.config;
+package com.github.koryu25.soundplayer.yaml;
 
 import com.github.koryu25.soundplayer.SoundPlayer;
 import org.apache.commons.io.FileUtils;

@@ -12,13 +12,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class EventListener implements Listener {
 
-    // リスナの登録
     public EventListener(SoundPlayer main) {
         main.getServer().getPluginManager().registerEvents(this, main);
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        //ログインしたプレイヤーをAudienceとして登録
         Player player = event.getPlayer();
         Audience audience = SoundPlayer.searchAudience(player);
         if (audience != null) return;
@@ -27,6 +27,7 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
+        //ログアウトしたプレイヤーをAudienceリストから削除
         Audience audience = SoundPlayer.searchAudience(event.getPlayer());
         if (audience == null) return;
         SoundPlayer.getAudienceList().remove(audience);
@@ -34,6 +35,7 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
+        //SoundPlayerのインベントリのクリック判定と処理の呼び出し
         if (event.getClickedInventory() == null) return;
         if (event.getClickedInventory().getType() == InventoryType.PLAYER) return;
         boolean cancel = false;

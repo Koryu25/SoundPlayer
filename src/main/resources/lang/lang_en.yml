@@ -11,7 +11,7 @@ next_page: "to next page"
 reset_message: "Volume, pitch, and change difference reset."
 help_messages:
   - "=== SoundPlayer CommandHelp ==="
-  - "/sp -> Show all sounds"
+  - "/sp all -> Show all sounds"
   - "/sp reset -> Reset Volume, Pitch and difference"
   - "/sp search [string] -> Show sounds contains [string]"
   - "============================="

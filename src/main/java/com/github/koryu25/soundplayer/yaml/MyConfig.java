@@ -1,7 +1,7 @@
-package com.github.koryu25.soundplayer.config;
+package com.github.koryu25.soundplayer.yaml;
 
 import com.github.koryu25.soundplayer.SoundPlayer;
-import com.github.koryu25.soundplayer.config.lang.Lang;
+import com.github.koryu25.soundplayer.yaml.lang.Lang;
 
 public class MyConfig extends CustomConfig {
 

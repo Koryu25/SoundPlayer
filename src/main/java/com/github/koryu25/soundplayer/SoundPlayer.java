@@ -1,7 +1,7 @@
 package com.github.koryu25.soundplayer;
 
-import com.github.koryu25.soundplayer.config.MyConfig;
-import com.github.koryu25.soundplayer.config.lang.LangConfig;
+import com.github.koryu25.soundplayer.yaml.MyConfig;
+import com.github.koryu25.soundplayer.yaml.lang.LangConfig;
 import com.github.koryu25.soundplayer.sound.AllSoundDataList;
 import com.github.koryu25.soundplayer.sound.Audience;
 import dev.jorel.commandapi.CommandAPI;
@@ -13,10 +13,10 @@ import java.util.List;
 
 public final class SoundPlayer extends JavaPlugin {
 
-    private static MyConfig myConfig;
-    private static LangConfig langConfig;
+    private static MyConfig myConfig; //メインコンフィグ
+    private static LangConfig langConfig; //言語ファイル
 
-    private static List<Audience> audienceList;
+    private static List<Audience> audienceList; //プレイヤーリスト
 
     @Override
     public void onEnable() {
@@ -24,7 +24,7 @@ public final class SoundPlayer extends JavaPlugin {
 
         langConfig = new LangConfig(this, "lang/" + myConfig.getLang().getPath());
 
-        AllSoundDataList.initialize();
+        AllSoundDataList.initialize(); //サウンドデータの読み込み
 
         CommandAPI.registerCommand(SoundPlayerCommand.class);
 
@@ -49,7 +49,11 @@ public final class SoundPlayer extends JavaPlugin {
         return audienceList;
     }
 
-    // Audienceを検索
+    /**
+     * Audienceを検索
+     * @param player プレイヤー
+     * @return 登録済みのAudienceまたはnull
+     */
     public static Audience searchAudience(Player player) {
         for (Audience audience : audienceList) {
             if (audience.getPlayer().getUniqueId().toString().equals(player.getUniqueId().toString())) {
