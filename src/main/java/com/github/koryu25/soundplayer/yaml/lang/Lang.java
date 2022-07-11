@@ -1,4 +1,4 @@
-package com.github.koryu25.soundplayer.config.lang;
+package com.github.koryu25.soundplayer.yaml.lang;
 
 public enum Lang {
     JAPANESE("lang_ja.yml"),

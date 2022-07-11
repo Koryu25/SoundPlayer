@@ -11,7 +11,7 @@ next_page: "次のページへ"
 reset_message: "ボリューム、ピッチ、変更差をリセットしました"
 help_messages:
   - "=== SoundPlayer CommandHelp ==="
-  - "/sp ですべてのサウンドを表示"
+  - "/sp allですべてのサウンドを表示"
   - "/sp reset でボリューム、ピッチ、変更差をリセット"
   - "/sp search [string] で[string]が含まれるサウンドを表示"
   - "============================="

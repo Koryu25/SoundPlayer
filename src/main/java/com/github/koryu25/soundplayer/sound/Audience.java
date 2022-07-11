@@ -1,7 +1,9 @@
 package com.github.koryu25.soundplayer.sound;
 
 import com.github.koryu25.soundplayer.SoundPlayer;
-import com.github.koryu25.soundplayer.config.lang.LangConfig;
+import com.github.koryu25.soundplayer.yaml.lang.LangConfig;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -14,11 +16,21 @@ import java.util.List;
 
 public class Audience {
 
+    @Getter
     private final Player player;
-    private float volume;
-    private float pitch;
-    private float different;
-    private SoundInventory soundInventory = null;
+
+    @Getter
+    private float volume; //音量
+
+    @Getter
+    private float pitch; //音の高さ
+
+    @Getter
+    private float different; //変数の変更差
+
+    @Getter
+    @Setter
+    private SoundInventory soundInventory = null; //サウンドデータが入ったインベントリ
 
     public Audience(Player player) {
         this(
@@ -35,23 +47,38 @@ public class Audience {
         this.different = different;
     }
 
-    // SoundInventoryを開く(nullじゃなかったら)
+    /**
+     * null判定後にsoundInventoryを開く
+     */
     public void open() {
         if (soundInventory == null) return;
         player.openInventory(soundInventory.getInventory());
     }
 
+    /**
+     * プレイヤーの位置に音を流します
+     * システム用として使います
+     * @param sound 流す音のデータ
+     * @param volume 流す音の大きさ
+     * @param pitch 流す音の高さ
+     */
     public void playSound(Sound sound, float volume, float pitch) {
         player.playSound(player.getLocation(), sound, volume, pitch);
     }
 
+    /**
+     * このAudienceに設定されている音の大きさ、音の高さ、変更差をリセットします
+     */
     public void reset() {
         volume = SoundPlayer.getMyConfig().getDefaultVolume();
         pitch = SoundPlayer.getMyConfig().getDefaultPitch();
         different = SoundPlayer.getMyConfig().getDefaultDifferent();
     }
 
-    // VolumeとPitchの情報を記したItemStackを取得
+    /**
+     * Audienceの情報をItemStackに変換します
+     * @return Audienceの情報を記載したItemStack
+     */
     public ItemStack toItemStack() {
         LangConfig lang = SoundPlayer.getLangConfig();
         ItemStack itemStack = new ItemStack(Material.REDSTONE_BLOCK);
@@ -66,15 +93,13 @@ public class Audience {
         return itemStack;
     }
 
-    // different
+    //このAudienceの変更差、音量、音の高さを調整するメソッド
     public void differentUp() {
         different *= 10;
     }
     public void differentDown() {
         different *= 0.1;
     }
-
-    // Upper, Downer
     public void volumeUp() {
         volume += different;
     }
@@ -86,27 +111,5 @@ public class Audience {
     }
     public void pitchDown() {
         pitch -= different;
-    }
-
-    // Getter
-    public Player getPlayer() {
-        return player;
-    }
-    public float getVolume() {
-        return volume;
-    }
-    public float getPitch() {
-        return pitch;
-    }
-    public float getDifferent() {
-        return different;
-    }
-    public SoundInventory getSoundInventory() {
-        return soundInventory;
-    }
-
-    // Setter
-    public void setSoundInventory(SoundInventory soundInventory) {
-        this.soundInventory = soundInventory;
     }
 }

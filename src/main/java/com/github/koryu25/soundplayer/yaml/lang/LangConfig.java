@@ -1,7 +1,7 @@
-package com.github.koryu25.soundplayer.config.lang;
+package com.github.koryu25.soundplayer.yaml.lang;
 
 import com.github.koryu25.soundplayer.SoundPlayer;
-import com.github.koryu25.soundplayer.config.CustomConfig;
+import com.github.koryu25.soundplayer.yaml.CustomConfig;
 
 import java.util.List;
 

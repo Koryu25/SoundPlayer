@@ -16,18 +16,16 @@ public class SoundData {
     public SoundData(Sound sound, int number) {
         this.sound = sound;
         this.number = number;
-        itemStack = new ItemStack(getMaterial());
+        itemStack = new ItemStack(Material.JUKEBOX);
         ItemMeta meta = itemStack.getItemMeta();
         meta.setDisplayName(number + ":" + sound.name().toLowerCase());
         itemStack.setItemMeta(meta);
     }
 
-    // Materialを検索するメソッド
-    private Material getMaterial() {
-        return Material.JUKEBOX;
-    }
-
-    // 再生
+    /**
+     * 音を流すメソッド
+     * @param audience このaudienceの位置で音を流します
+     */
     public void play(Audience audience) {
         audience.getPlayer().playSound(
                 audience.getPlayer().getLocation(),
@@ -37,7 +35,10 @@ public class SoundData {
         );
     }
 
-    // Getter, Setter
+    /**
+     * サウンドデータの名前を取得
+     * @return サウンドデータの名前
+     */
     public String getName() {
         return sound.name();
     }
