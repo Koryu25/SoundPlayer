@@ -35,6 +35,8 @@ dependencies {
     compileOnly "dev.jorel:commandapi-core:8.4.1"
     compileOnly "dev.jorel:commandapi-annotations:8.4.1"
     annotationProcessor "dev.jorel:commandapi-annotations:8.4.1"
+
+    implementation 'com.github.stefvanschie.inventoryframework:IF:0.10.6'
 }
 
 task shadowBuild(dependsOn: [shadowJar, build])
