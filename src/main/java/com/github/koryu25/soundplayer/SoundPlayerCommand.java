@@ -44,4 +44,10 @@ public class SoundPlayerCommand {
         audience.setSoundInventory(new SoundInventory(audience, AllSoundDataList.search(keyWord), keyWord));
         audience.open();
     }
+
+    @Subcommand("test")
+    public static void test(Player player) {
+        MyInv myInv = new MyInv();
+        myInv.test(player);
+    }
 }
