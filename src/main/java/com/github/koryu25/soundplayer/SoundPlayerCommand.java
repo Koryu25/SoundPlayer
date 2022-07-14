@@ -47,7 +47,6 @@ public class SoundPlayerCommand {
 
     @Subcommand("test")
     public static void test(Player player) {
-        MyInv myInv = new MyInv();
-        myInv.test(player);
+        new MyInv().test(player);
     }
 }
