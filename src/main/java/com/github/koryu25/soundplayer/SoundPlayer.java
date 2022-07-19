@@ -26,7 +26,7 @@ public final class SoundPlayer extends JavaPlugin {
 
         AllSoundDataList.initialize(); //サウンドデータの読み込み
 
-        CommandAPI.registerCommand(SoundPlayerCommand.class);
+        CommandAPI.registerCommand(SRCommand.class);
 
         new EventListener(this);
 

@@ -2,7 +2,7 @@ package com.github.koryu25.soundplayer;
 
 import com.github.koryu25.soundplayer.sound.AllSoundDataList;
 import com.github.koryu25.soundplayer.sound.Audience;
-import com.github.koryu25.soundplayer.sound.SoundInventory;
+import com.github.koryu25.soundplayer.sound.SoundInv;
 import dev.jorel.commandapi.annotations.Command;
 import dev.jorel.commandapi.annotations.Default;
 import dev.jorel.commandapi.annotations.Permission;
@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Command("sr")
-public class SoundPlayerCommand {
+public class SRCommand {
 
     @Default
     public static void sp(CommandSender sender) {
@@ -23,7 +23,7 @@ public class SoundPlayerCommand {
     @Permission("sr.all")
     public static void all(Player player) {
         Audience audience = SoundPlayer.searchAudience(player);
-        audience.setSoundInventory(new SoundInventory(audience, AllSoundDataList.get(), ""));
+        audience.setSoundInv(new SoundInv(audience, AllSoundDataList.get(), ""));
         audience.open();
     }
 
@@ -41,7 +41,7 @@ public class SoundPlayerCommand {
             Player player,
             @AStringArgument String keyWord) {
         Audience audience = SoundPlayer.searchAudience(player);
-        audience.setSoundInventory(new SoundInventory(audience, AllSoundDataList.search(keyWord), keyWord));
+        audience.setSoundInv(new SoundInv(audience, AllSoundDataList.search(keyWord), keyWord));
         audience.open();
     }
 

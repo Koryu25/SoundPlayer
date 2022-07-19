@@ -30,7 +30,7 @@ public class Audience {
 
     @Getter
     @Setter
-    private SoundInventory soundInventory = null; //サウンドデータが入ったインベントリ
+    private SoundInv soundInv; //サウンドデータが入ったインベントリ
 
     public Audience(Player player) {
         this(
@@ -51,8 +51,8 @@ public class Audience {
      * null判定後にsoundInventoryを開く
      */
     public void open() {
-        if (soundInventory == null) return;
-        player.openInventory(soundInventory.getInventory());
+        if (soundInv == null) return;
+        soundInv.getGui().show(player);
     }
 
     /**
